@@ -26,8 +26,8 @@ module JsonApiClient
         request(:get, path, params)
       end
 
-      def destroy(record)
-        request(:delete, resource_path(record.attributes), {})
+      def destroy(record, additional_params={})
+        request(:delete, resource_path(record.attributes), additional_params)
       end
 
       def linked(path)

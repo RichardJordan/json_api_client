@@ -402,8 +402,8 @@ module JsonApiClient
     # Try to destroy this resource
     #
     # @return [Boolean] Whether or not the destroy succeeded
-    def destroy
-      self.last_result_set = self.class.requestor.destroy(self)
+    def destroy(additional_params=nil)
+      self.last_result_set = self.class.requestor.destroy(self, additional_params)
       if !last_result_set.has_errors?
         self.attributes.clear
         true
