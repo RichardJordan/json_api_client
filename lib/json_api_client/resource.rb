@@ -276,15 +276,26 @@ module JsonApiClient
     def initialize(params = {})
       self.links = self.class.linker.new(params.delete("links") || {})
       self.relationships = self.class.relationship_linker.new(params.delete("relationships") || {})
+
+      self.attributes = nil
+
       self.class.associations.each do |association|
         if params.has_key?(association.attr_name.to_s)
           set_attribute(association.attr_name, association.parse(params[association.attr_name.to_s]))
         end
       end
+
+
+
+
+
       self.attributes = params.merge(self.class.default_attributes)
+
       self.class.schema.each_property do |property|
         attributes[property.name] = property.default unless attributes.has_key?(property.name) || property.default.nil?
       end
+    rescue => e
+      binding.pry
     end
 
     # Set the current attributes and try to save them
